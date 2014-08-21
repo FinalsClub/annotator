@@ -110,7 +110,8 @@ class AnnotationRegistry
           # Update with store return value
           $.extend(obj, ret)
 
-          @core.trigger(afterEvent, obj)
+          if not @store.firesMutationEvents
+            @core.trigger(afterEvent, obj)
 
           return obj
 
