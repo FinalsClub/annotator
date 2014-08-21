@@ -102,22 +102,21 @@ class Highlighter
           # Oh Javascript, why you so crap? This will lose the traceback.
           throw e
 
-    annotation._local ?= {}
-    annotation._local.highlights ?= []
+    highlights = []
 
     for normed in normedRanges
       $.merge(
-        annotation._local.highlights,
+        highlights,
         highlightRange(normed, @options.highlightClass)
       )
 
     # Save the annotation data on each highlighter element.
-    $(annotation._local.highlights).data('annotation', annotation)
+    $(highlights).data('annotation', annotation)
     # Add a data attribute for annotation id if the annotation has one
     if annotation.id?
-      $(annotation._local.highlights).attr('data-annotation-id', annotation.id)
+      $(highlights).attr('data-annotation-id', annotation.id)
 
-    return annotation._local.highlights
+    return highlights
 
   # Public: Remove the drawn highlights for the given annotation.
   #
@@ -125,10 +124,9 @@ class Highlighter
   #
   # Returns nothing.
   undraw: (annotation) ->
-    if annotation._local?.highlights?
-      for h in annotation._local.highlights when h.parentNode?
-        $(h).replaceWith(h.childNodes)
-      delete annotation._local.highlights
+    selector = '[data-annotation-id=' + annotation.id + ']'
+    for h in $(@element).find(selector) when h.parentNode?
+      $(h).replaceWith(h.childNodes)
 
   # Public: Redraw the highlights for the given annotation.
   #
