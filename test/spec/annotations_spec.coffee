@@ -80,8 +80,3 @@ describe 'AnnotationRegistry', ->
       query = {url: 'foo'}
       a.query(query)
       assert(s.query.calledWith(query))
-
-  # I've removed a nasty test of implementation (testing _cycle directly, eurgh)
-  # and this is here as a note to check the implementation strips
-  # non-serialisable data before passing stuff to the store plugin.
-  xit "should strip any _local data before passing to the store plugin"

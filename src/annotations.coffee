@@ -100,14 +100,12 @@ class AnnotationRegistry
     @core.triggerThen(beforeEvent, obj)
     .then =>
       safeCopy = $.extend(true, {}, obj)
-      delete safeCopy._local
 
       @store[storeFunc](safeCopy)
         .then (ret) =>
           # Empty object without changing identity
           for own k, v of obj
-            if k != '_local'
-              delete obj[k]
+            delete obj[k]
 
           # Update with store return value
           $.extend(obj, ret)
