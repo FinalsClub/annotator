@@ -207,6 +207,8 @@ class Annotator extends Delegator
     for name, plugin of @plugins
       plugin.destroy?()
 
+    @store?.destroy?()
+
     idx = Annotator._instances.indexOf(this)
     if idx != -1
       Annotator._instances.splice(idx, 1)
